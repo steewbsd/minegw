@@ -82,27 +82,58 @@ func (board *Board) checkValidCell(posX,posY int) (bool, bool) {
 	return posXvalid, posYvalid
 }
 
+
 func (board *Board) locateNearMines(posX,posY int) int {
 	// X axis:
-	if posX != 0 && posY != 0 && posX != board.SizeX && posY != board.SizeY {
-		originX := posX - 1
-		originY := posY - 1
-		var i int
-		var j int
-		var around [][]byte
-		var rowX []byte
-		for j = 0; j < 3 ; j++ {
-			for i = 0; i < 3 ; i++ {
-				rowX = append(rowX, board.getPosition(originX+i, originY+j))
-			}
-			around = append(around, rowX)
-			fmt.Println(rowX)
-			rowX = nil
+	var count int
+	var originX int
+	var originY int
+	var i int
+	var j int
+	var max_i int
+	var max_j int
+
+	if posX != 0 && posY != 0 && posX != board.SizeX - 1 && posY != board.SizeY - 1 {
+		originX = posX - 1
+		originY = posY - 1
+		max_i , max_j = 3,3
+	} else {
+		if posX == 0{
+			originX = posX
+			max_i = 2
+		} else if posX == board.SizeX - 1 {
+			originX = posX - 1
+			max_i = 2
+		} else {
+			originX = posX - 1
+			max_i = 3
+		}
+		if posY == 0 {
+			originY = posY
+			max_j = 2
+		} else if posY == board.SizeY - 1 {
+			originY = posY - 1
+			max_j = 2
+		} else {
+			originY = posY - 1
+			max_j = 3
 		}
 	}
-	return 0
+
+	for j = 0; j < max_j ; j++ {
+		for i = 0; i < max_i ; i++ {
+			if originX+i == posX && originY+j == posY {
+				continue
+			} else if board.getPosition(originX+i, originY+j) == 1 {
+				count++
+			}
+		}
+	}
+
+	return count
 }
 
 func (board *Board) generateRealBoard() {
 	// Iterate through each byte array
+
 }

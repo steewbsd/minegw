@@ -53,7 +53,7 @@ func (board *Board) Create(size string) {
 }
 
 func (board *Board) Flag(posX,posY int) {
-	board.locateNearMines(posX, posY)
+	fmt.Println(board.locateNearMines(posX, posY))
 }
 
 func (board *Board) Mine(posX,posY int) {
