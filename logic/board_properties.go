@@ -65,6 +65,12 @@ func (board *Board) Print() {
 	}
 }
 
+func (board *Board) PrintTable() {
+	for _, row := range board.Table {
+		fmt.Println(row)
+	}
+}
+
 func (board *Board) checkValidCell(posX,posY int) (bool, bool) {
 	var posXvalid bool
 	var posYvalid bool
@@ -135,5 +141,18 @@ func (board *Board) locateNearMines(posX,posY int) int {
 
 func (board *Board) generateRealBoard() {
 	// Iterate through each byte array
-
+	var newTable [][]int
+	var newRow []int
+	for j, row := range board.Cells {
+		for i,cell := range row {
+			if cell == 0 {
+				newRow = append(newRow, board.locateNearMines(i, j))
+			} else {
+				newRow = append(newRow, 9)
+			}
+		}
+		newTable = append(newTable, newRow)
+		newRow = nil
+	}
+	board.Table = newTable
 }

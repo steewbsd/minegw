@@ -14,7 +14,7 @@ type Board struct {
 	Mines int
 	Probability int
 	Cells [][]byte
-	Table [][]byte
+	Table [][]int
 }
 
 func Spawn() *Board {
@@ -49,11 +49,12 @@ func (board *Board) Create(size string) {
 	board.Probability = 50
 	board.createEachCell()
 	board.Print()
+	board.generateRealBoard()
+	board.PrintTable()
 	board.Prompt()
 }
 
 func (board *Board) Flag(posX,posY int) {
-	fmt.Println(board.locateNearMines(posX, posY))
 }
 
 func (board *Board) Mine(posX,posY int) {
